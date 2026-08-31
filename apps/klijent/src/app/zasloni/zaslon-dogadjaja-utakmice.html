@@ -1,0 +1,152 @@
+
+@let trenutna = utakmica();
+
+<a class="back-link" routerLink="/utakmice">
+  <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </svg>
+  Natrag na utakmice
+</a>
+
+<h2>Unos događaja</h2>
+
+@if (pogreska()) {
+  <p class="error">{{ pogreska() }}</p>
+}
+
+@if (dogadjaji().length === 0) {
+  <p class="notice">Utakmica još nema zapisanih događaja.</p>
+} @else {
+
+  <div class="scroll scroll-v" [style.--redaka-tablice]="vidljivihRedaka">
+    <table>
+      <thead>
+        <tr>
+          <th>Vrijeme</th>
+          <th>Tim</th>
+          <th>Igrač</th>
+          <th>Događaj</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        @for (dogadjaj of dogadjaji(); track dogadjaj.id) {
+          <tr>
+            <td>{{ oblikujVrijemeSemafora(dogadjaj.quarter, dogadjaj.minute, dogadjaj.second) }}</td>
+            <td>{{ imeTima(dogadjaj.teamId) }}</td>
+            <td>{{ imeIgraca(dogadjaj.playerId) }}</td>
+            <td>{{ opisDogadjaja(dogadjaj) }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (trenutna === null) {
+  <p class="notice">Utakmica nije dohvaćena, pa se događaji ne mogu unositi.</p>
+} @else {
+  <button
+    type="button"
+    class="fab"
+    title="Novi događaj"
+    aria-label="Novi događaj"
+    (click)="otvoriDijalog()"
+  >
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  </button>
+
+  <dialog #dijalog (close)="naZatvaranjeDijaloga()">
+    <form (ngSubmit)="dodaj()">
+      <h3>Novi događaj</h3>
+
+      @if (pogreskaObrasca()) {
+        <p class="error">{{ pogreskaObrasca() }}</p>
+      }
+
+      <label>
+        Vrsta
+        <select name="type" [(ngModel)]="obrazac.type">
+          @for (vrsta of vrsteDogadjaja; track vrsta.vrijednost) {
+            <option [ngValue]="vrsta.vrijednost">{{ vrsta.oznaka }}</option>
+          }
+        </select>
+      </label>
+
+      <label>
+        Igrač
+        <select name="playerId" [(ngModel)]="obrazac.playerId">
+          <option [ngValue]="null">— odaberite —</option>
+
+          @for (sastav of sastavi(); track sastav.tim.id) {
+            <optgroup [label]="sastav.tim.name">
+              @for (igrac of sastav.igraci; track igrac.id) {
+                <option [ngValue]="igrac.id">
+                  {{ igrac.firstName }} {{ igrac.lastName }} ({{ igrac.position }})
+                </option>
+              }
+            </optgroup>
+          }
+        </select>
+      </label>
+
+      <div class="clock">
+        <label>
+          Četvrtina
+          <input type="number" name="quarter" [(ngModel)]="obrazac.quarter" />
+        </label>
+        <label>
+          Minuta
+          <input type="number" name="minute" [(ngModel)]="obrazac.minute" />
+        </label>
+        <label>
+          Sekunda
+          <input type="number" name="second" [(ngModel)]="obrazac.second" />
+        </label>
+      </div>
+
+      @if (jeSut) {
+        <label>
+          Vrijednost
+          <select name="points" [(ngModel)]="obrazac.points">
+            @for (izbor of bodoviSuta; track izbor.vrijednost) {
+              <option [ngValue]="izbor.vrijednost">{{ izbor.oznaka }}</option>
+            }
+          </select>
+        </label>
+        <label class="check">
+          <input type="checkbox" name="made" [(ngModel)]="obrazac.made" />
+          Šut je pogođen
+        </label>
+      }
+
+      @if (jeIzmjena) {
+        <label>
+          Smjer
+          <select name="direction" [(ngModel)]="obrazac.direction">
+            @for (izbor of smjeroviIzmjene; track izbor.vrijednost) {
+              <option [ngValue]="izbor.vrijednost">{{ izbor.oznaka }}</option>
+            }
+          </select>
+        </label>
+      }
+
+      <div class="actions">
+        <button type="submit">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12.5l4.5 4.5L19 7" />
+          </svg>
+          Zapiši događaj
+        </button>
+        <button type="button" class="secondary" (click)="zatvoriDijalog()">
+          <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+          Odustani
+        </button>
+      </div>
+    </form>
+  </dialog>
+}

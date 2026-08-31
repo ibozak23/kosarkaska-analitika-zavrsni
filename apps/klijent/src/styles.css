@@ -1,0 +1,1453 @@
+/* ============================================================
+   Tokeni preuzeti iz sustava dizajna imi.solus.
+   Imena su zadržana iz izvora radi izravne usporedbe s
+   _ds/tokens/*.css. Zadana je svijetla tema; tamna se dobiva
+   atributom data-theme="dark" na elementu <html>.
+   ============================================================ */
+:root {
+  color-scheme: light;
+
+  --ink-0: #f4f2eb;
+  --ink-1: #ece9e0;
+  --ink-2: #e2ded2;
+  --ink-3: #d3cec0;
+  --ink-4: #a39d8e;
+
+  --steel: #5f5b53;
+  --mist: #4b473f;
+  --bone: #2b2925;
+  --paper: #171511;
+  --snow: #ffffff;
+
+  --flame-200: #9e1b1b;
+  --flame-400: #b92121;
+  --flame: #d92525;
+  --flame-600: #a31818;
+  --flame-700: #7c1111;
+  --flame-900: #f3d6d0;
+
+  /* Podloga gumba pri lebdenju; bijeli tekst na njoj drži 6,4:1. */
+  --accent-hover: var(--flame-400);
+
+  --border-hairline: color-mix(in oklab, var(--ink-4) 55%, transparent);
+  --border-strong: #8e8878;
+  --accent-wash: color-mix(in oklab, var(--flame) 12%, transparent);
+  --accent-border: color-mix(in oklab, var(--flame) 45%, transparent);
+  --focus-ring: color-mix(in oklab, var(--flame) 60%, transparent);
+  --grid-line: color-mix(in oklab, var(--ink-4) 40%, transparent);
+
+  --shadow-btn:
+    inset 0 1px 0 0 color-mix(in oklab, #ffffff 30%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklab, #000000 22%, transparent),
+    0 1px 1px 0 rgb(45 38 25 / 22%), 0 2px 4px 0 rgb(45 38 25 / 18%),
+    0 4px 10px -2px color-mix(in oklab, var(--flame) 30%, transparent);
+  --shadow-btn-hover:
+    inset 0 1px 0 0 color-mix(in oklab, #ffffff 36%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklab, #000000 24%, transparent),
+    0 1px 1px 0 rgb(45 38 25 / 22%), 0 3px 6px 0 rgb(45 38 25 / 20%),
+    0 6px 16px -2px color-mix(in oklab, var(--flame) 42%, transparent);
+  --shadow-panel: 0 8px 32px -8px rgb(45 38 25 / 20%), 0 2px 8px -2px rgb(45 38 25 / 12%);
+
+  /* Pisma: Geist je prvi u nizu pa preuzima ako je lokalno
+     dostupan, inače se koriste sistemska pisma. */
+  --font-sans: "Geist", system-ui, "Segoe UI Variable Text", "Segoe UI", -apple-system, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "Cascadia Code", Consolas, "SF Mono", Menlo, monospace;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+
+  --r-xs: 6px;
+  --r-sm: 8px;
+  --r-md: 10px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --r-2xl: 20px;
+  --r-pill: 999px;
+
+  --tracking-mono: 0.08em;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur: 200ms;
+
+  --content-width: 1040px;
+  --gutter: 24px;
+  --grid-cell: 96px;
+  --header-height: 56px;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink-0: #0d0d0b;
+  --ink-1: #151411;
+  --ink-2: #1e1c18;
+  --ink-3: #2c2a25;
+  --ink-4: #484540;
+
+  --steel: #8a857a;
+  --mist: #c0bcb1;
+  --bone: #e8e5dc;
+  --paper: #f5f3ee;
+
+  --flame-200: #f3a3a3;
+  --flame-400: #e44a4a;
+  --flame-600: #b81c1c;
+  --flame-700: #8e1414;
+  --flame-900: #3a0c0c;
+
+  /* Plamen-400 je na tamnoj podlozi presvijetao za bijeli tekst
+     (3,9:1), pa je podloga pri lebdenju zatamnjena do 4,6:1. */
+  --accent-hover: #de2e2e;
+
+  --border-strong: #5c594f;
+  --accent-wash: color-mix(in oklab, var(--flame) 14%, transparent);
+
+  --shadow-btn:
+    inset 0 1px 0 0 color-mix(in oklab, #ffffff 34%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklab, #000000 24%, transparent),
+    0 1px 1px 0 rgb(0 0 0 / 35%), 0 2px 4px 0 rgb(0 0 0 / 30%),
+    0 4px 10px -2px color-mix(in oklab, var(--flame) 40%, transparent);
+  --shadow-btn-hover:
+    inset 0 1px 0 0 color-mix(in oklab, #ffffff 40%, transparent),
+    inset 0 -1px 0 0 color-mix(in oklab, #000000 26%, transparent),
+    0 1px 1px 0 rgb(0 0 0 / 35%), 0 3px 6px 0 rgb(0 0 0 / 32%),
+    0 6px 16px -2px color-mix(in oklab, var(--flame) 52%, transparent);
+  --shadow-panel: 0 8px 32px -8px rgb(0 0 0 / 60%), 0 2px 8px -2px rgb(0 0 0 / 40%);
+}
+
+/* ============================================================
+   Osnova
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--bone);
+  background: var(--ink-0);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Nacrtna mreža iza cijele stranice, motiv sustava dizajna. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-cell) var(--grid-cell);
+  background-position: center top;
+  mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
+}
+
+a {
+  color: var(--flame-400);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+a:hover {
+  color: var(--flame-200);
+}
+
+::selection {
+  background: var(--accent-wash);
+  color: var(--paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-4) transparent;
+}
+
+/*
+  Prozor koji tablicu ograničava na --redaka-tablice redaka i dalje otkriva skrolanjem unutar
+  samog prozora, ne cijele stranice. 37px i 43px prate stvarnu visinu zaglavlja i retka (razmak
+  10px + visina retka teksta) pri trenutačnom fontu - promijene li se ti razmaci, treba uskladiti
+  i ove brojeve.
+*/
+.scroll-v {
+  overflow-y: auto;
+  max-height: calc(37px + var(--redaka-tablice, 15) * 43px);
+}
+
+.scroll-v thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.scroll-v tfoot th {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+}
+
+/* ============================================================
+   Zaglavlje i navigacija
+   ============================================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  min-height: var(--header-height);
+  padding: var(--sp-2) var(--sp-6);
+  background: color-mix(in oklab, var(--ink-0) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.2px;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+/* Naslov je poveznica na nadzornu ploču, ali izgleda kao obični tekst — boja prati h1, ne
+   uobičajenu plamenu boju poveznica, i mijenja se tek pri lebdenju. */
+.brand a {
+  color: inherit;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.brand a:hover {
+  color: var(--flame-400);
+}
+
+nav {
+  display: flex;
+  gap: var(--sp-1);
+  margin-left: auto;
+  padding: var(--sp-1);
+  border: 1px solid var(--ink-4);
+  border-radius: var(--r-pill);
+  background: var(--ink-1);
+}
+
+nav a {
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--steel);
+  white-space: nowrap;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+nav a:hover {
+  color: var(--mist);
+}
+
+nav a.active {
+  color: var(--paper);
+  background: var(--accent-wash);
+  border-color: var(--accent-border);
+}
+
+.theme-toggle {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--ink-4);
+  border-radius: var(--r-pill);
+  background: var(--ink-1);
+  color: var(--mist);
+  box-shadow: none;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  color: var(--flame-400);
+  border-color: var(--accent-border);
+  background: var(--ink-1);
+  box-shadow: none;
+}
+
+.theme-toggle:active {
+  transform: scale(0.88);
+}
+
+.theme-toggle svg {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform 360ms var(--ease-out);
+}
+
+.theme-toggle .sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle .moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+
+html[data-theme="dark"] .theme-toggle .sun {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+html[data-theme="dark"] .theme-toggle .moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+/* ============================================================
+   Stupac sadržaja
+   ============================================================ */
+main {
+  position: relative;
+  z-index: 1;
+  width: var(--content-width);
+  max-width: calc(100vw - 2 * var(--gutter));
+  min-height: calc(100vh - var(--header-height));
+  margin: 0 auto;
+  padding: var(--sp-10) var(--sp-8) var(--sp-20);
+  border-left: 1px solid var(--border-hairline);
+  border-right: 1px solid var(--border-hairline);
+  background: color-mix(in oklab, var(--ink-0) 68%, transparent);
+}
+
+/* ============================================================
+   Naslovi
+   ============================================================ */
+h1,
+h2,
+h3 {
+  color: var(--paper);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: 0 0 var(--sp-6);
+  padding-bottom: var(--sp-4);
+  border-bottom: 1px solid var(--border-hairline);
+  font-size: 22px;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+/* Povratak na zaslon odakle se došlo (npr. utakmice), uvijek odmah iznad naslova. Tiši je od
+   .button jer ne izvodi radnju nego samo mijenja stranicu. */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--steel);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.back-link:hover {
+  color: var(--flame-400);
+}
+
+.back-link .icon {
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin: var(--sp-8) 0 var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-hairline);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--paper);
+}
+
+form > h3:first-child {
+  margin-top: 0;
+}
+
+/* ============================================================
+   Tablice
+   ============================================================ */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--ink-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+  padding: 10px var(--sp-4);
+  text-align: left;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+thead th {
+  background: var(--ink-1);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--mist);
+  white-space: nowrap;
+}
+
+tbody td {
+  color: var(--bone);
+  white-space: nowrap;
+}
+
+tbody tr {
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+tbody tr:hover {
+  background: color-mix(in oklab, var(--ink-1) 70%, transparent);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Redak naoružan za brisanje nosi plameni rub i podlogu. */
+tbody tr.confirming td {
+  background: var(--accent-wash);
+}
+
+tbody tr.confirming td:first-child {
+  box-shadow: inset 2px 0 0 0 var(--flame);
+}
+
+tbody tr.selected td {
+  background: var(--accent-wash);
+}
+
+tbody tr.selected td:first-child {
+  box-shadow: inset 2px 0 0 0 var(--flame);
+}
+
+/* Ime igrača u tablici učinka je birač, ne samo tekst. */
+td .pick {
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font: inherit;
+  color: var(--bone);
+  text-align: left;
+  border-bottom: 1px dotted color-mix(in oklab, var(--flame) 55%, transparent);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+td .pick:hover {
+  color: var(--flame-200);
+  background: none;
+  border-color: var(--flame);
+  border-bottom-style: solid;
+  box-shadow: none;
+}
+
+tr.selected .pick {
+  color: var(--flame-200);
+  border-bottom-style: solid;
+}
+
+tfoot th {
+  background: var(--ink-1);
+  border-top: 1px solid var(--border-hairline);
+  border-bottom: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--paper);
+  white-space: nowrap;
+}
+
+.number-column {
+  width: 1%;
+  text-align: right;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+}
+
+.actions-column {
+  width: 1%;
+  white-space: nowrap;
+}
+
+
+/* ============================================================
+   Traka za proširenje tablice
+   ============================================================ */
+.more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  width: 100%;
+  margin-top: var(--sp-3);
+  padding: 10px var(--sp-4);
+  border: 1px solid var(--ink-4);
+  border-radius: var(--r-md);
+  background: color-mix(in oklab, var(--flame-900) 24%, transparent);
+  box-shadow: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--flame-200);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.more:hover {
+  color: var(--flame-400);
+  border-color: var(--accent-border);
+  background: color-mix(in oklab, var(--flame-900) 40%, transparent);
+  box-shadow: none;
+}
+
+.more::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.more.open::after {
+  margin-top: 3px;
+  transform: rotate(-135deg);
+}
+
+/* ============================================================
+   Harmonika kluba
+   ============================================================ */
+.accordion {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  width: 100%;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+  background: var(--ink-2);
+  box-shadow: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--paper);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.accordion::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  margin-top: -3px;
+  border-right: 1.5px solid var(--flame-400);
+  border-bottom: 1.5px solid var(--flame-400);
+  transform: rotate(45deg);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.accordion.open {
+  border-color: var(--accent-border);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.accordion.open::after {
+  margin-top: 3px;
+  transform: rotate(-135deg);
+}
+
+.accordion:hover {
+  color: var(--paper);
+  border-color: var(--accent-border);
+  background: var(--ink-2);
+  box-shadow: none;
+}
+
+.accordion-meta {
+  margin-left: auto;
+  color: var(--steel);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+.accordion.open + .scroll table {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: none;
+  border-color: var(--accent-border);
+}
+
+/* ============================================================
+   Kartice pokazatelja
+   ============================================================ */
+.indicators {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: var(--sp-3);
+  margin: var(--sp-5) 0 var(--sp-10);
+}
+
+.indicators div {
+  position: relative;
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  background: var(--ink-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+
+.indicators div::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--flame), transparent);
+  opacity: 0.5;
+}
+
+.indicators dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+.indicators dd {
+  margin: var(--sp-2) 0 0;
+  font-family: var(--font-mono);
+  font-size: 24px;
+  line-height: 1.1;
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Popis igrača po timovima
+   ============================================================ */
+.roster {
+  margin-bottom: var(--sp-3);
+}
+
+.roster h3 span {
+  margin-left: auto;
+  color: var(--steel);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Obrasci
+   ============================================================ */
+/* Obrazac koji nosi kartice pokazatelja nije obrazac za unos
+   nego birač, pa ne treba usku mjeru. */
+form:has(.indicators) {
+  max-width: none;
+}
+
+form:has(.indicators) > label {
+  max-width: 24rem;
+}
+
+form .indicators {
+  margin-bottom: 0;
+}
+
+form {
+  max-width: 30rem;
+  margin-top: var(--sp-10);
+  padding: var(--sp-5);
+  background: var(--ink-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-xl);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--mist);
+}
+
+input,
+select {
+  display: block;
+  width: 100%;
+  margin-top: var(--sp-2);
+  padding: 8px 10px;
+  border: 1px solid var(--ink-4);
+  border-radius: var(--r-sm);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--bone);
+  background: var(--ink-1);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+input:hover,
+select:hover {
+  border-color: var(--border-strong);
+}
+
+input:focus,
+select:focus {
+  border-color: var(--flame);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+
+input[type="number"],
+input[type="datetime-local"] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--flame);
+}
+
+fieldset {
+  margin: 0 0 var(--sp-4);
+  padding: var(--sp-3) var(--sp-4) var(--sp-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+  background: color-mix(in oklab, var(--ink-1) 60%, transparent);
+}
+
+legend {
+  padding: 0 var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--steel);
+}
+
+label.check {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-bottom: 0;
+  padding: 5px var(--sp-2);
+  border-radius: var(--r-xs);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--bone);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+label.check:hover {
+  background: var(--ink-1);
+}
+
+label.check input {
+  width: auto;
+  margin-top: 0;
+}
+
+.clock {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+}
+
+.clock label {
+  margin-bottom: var(--sp-4);
+}
+
+/* ============================================================
+   Ikone
+   ============================================================ */
+/*
+  Ikone su umetnuti SVG (isti obrazac kao .theme-toggle svg), bez knjižnice. Boja prati tekst uz
+  koji stoje: currentColor daje bijelu na crveno popunjenim gumbima (fab, primarni, potvrda
+  brisanja), a .icon-accent nasilno postavlja crvenu ondje gdje je okolni tekst siv (tihi gumbi
+  radnje, poveznica natrag, navigacija).
+*/
+.icon {
+  width: 19px;
+  height: 19px;
+  margin-right: 7px;
+  flex-shrink: 0;
+  vertical-align: -5px;
+}
+
+.icon-accent {
+  color: var(--flame);
+}
+
+.fab .icon {
+  width: 26px;
+  height: 26px;
+  margin-right: 0;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   Gumbi
+   ============================================================ */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-5);
+}
+
+a.button {
+  display: inline-block;
+  text-decoration: none;
+}
+
+button,
+a.button {
+  padding: 9px 18px;
+  border: 1px solid var(--flame-600);
+  border-radius: var(--r-md);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--snow);
+  background: var(--flame);
+  box-shadow: var(--shadow-btn);
+  cursor: pointer;
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+button:hover,
+a.button:hover {
+  color: var(--snow);
+  background: var(--accent-hover);
+  border-color: var(--flame);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+button:active,
+a.button:active {
+  transform: translateY(0.5px) scale(0.99);
+}
+
+button.secondary,
+a.button.secondary {
+  color: var(--mist);
+  background: color-mix(in oklab, var(--ink-1) 82%, transparent);
+  border-color: var(--ink-4);
+  box-shadow: none;
+}
+
+button.secondary:hover,
+a.button.secondary:hover {
+  color: var(--paper);
+  background: var(--ink-1);
+  border-color: var(--border-strong);
+  box-shadow: none;
+}
+
+/* Radnje u retku nisu gumbi nego tihe pločice s obrubom. */
+.actions-column button,
+.actions-column a.button {
+  display: inline-flex;
+  align-items: center;
+  margin-left: var(--sp-2);
+  padding: 5px 12px;
+  border: 1px solid var(--ink-4);
+  border-radius: var(--r-pill);
+  background: color-mix(in oklab, var(--ink-1) 82%, transparent);
+  box-shadow: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--mist);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.actions-column button:first-child,
+.actions-column a.button:first-child {
+  margin-left: 0;
+}
+
+.actions-column button:hover,
+.actions-column a.button:hover {
+  color: var(--paper);
+  border-color: var(--accent-border);
+  background: var(--accent-wash);
+  box-shadow: none;
+}
+
+.actions-column button:active,
+.actions-column a.button:active {
+  transform: scale(0.96);
+}
+
+.actions-column button.danger {
+  color: var(--snow);
+  border-color: var(--flame-600);
+  background: var(--flame);
+  box-shadow: var(--shadow-btn);
+}
+
+.actions-column button.danger:hover {
+  color: var(--snow);
+  border-color: var(--flame);
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+button:disabled {
+  opacity: 0.45;
+  box-shadow: none;
+  cursor: default;
+}
+
+button:disabled:hover {
+  background: var(--flame);
+  border-color: var(--flame-600);
+  box-shadow: none;
+}
+
+.fab {
+  position: fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  right: var(--sp-8);
+  bottom: var(--sp-8);
+  z-index: 30;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border-radius: 50%;
+  font-family: var(--font-sans);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ============================================================
+   Nadzorna ploča
+   ============================================================ */
+/* Tri kartice sa stvarnim podacima (poredak, strijelci, nedavne utakmice) i dva grafa ispod njih. */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  gap: var(--sp-4);
+  margin: var(--sp-5) 0 var(--sp-6);
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-4);
+  background: var(--ink-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+}
+
+.dashboard-card-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--paper);
+}
+
+.dashboard-card-title .icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 0;
+}
+
+/* Manja inačica opće tablice: bez rubova i pozadine kartice, jer već sjedi unutar jedne. */
+.dashboard-table {
+  width: 100%;
+  border: none;
+  background: none;
+  font-size: 13px;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.dashboard-table thead th {
+  background: none;
+  font-size: 10px;
+}
+
+.dashboard-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.dashboard-table tbody tr:hover {
+  background: none;
+}
+
+.dashboard-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+
+.dashboard-list li + li {
+  border-top: 1px solid var(--border-hairline);
+}
+
+.dashboard-list a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 0;
+  color: var(--bone);
+}
+
+.dashboard-list a:hover {
+  color: var(--flame-200);
+}
+
+.dashboard-list-date {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--steel);
+}
+
+.dashboard-list-matchup {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.dashboard-list-matchup span:first-child,
+.dashboard-list-matchup span:last-child {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dashboard-list-score {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--flame);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Poveznica na cijeli zaslon, prikovana uz dno kartice bez obzira koliko redaka tablica iznad ima. */
+.dashboard-card-link {
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--flame-400);
+}
+
+.dashboard-card-link::after {
+  content: " →";
+}
+
+/* Grafovi: obična vodoravna traka po redu, bez ijednog grafičkog elementa - širina ispuna je
+   postotak zapisan izravno u predlošku ([style.width.%]). */
+.dashboard-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+
+.chart {
+  padding: var(--sp-4);
+  background: var(--ink-2);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+}
+
+.chart h3 {
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  border: none;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr 2.5rem;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+  font-size: 12px;
+}
+
+.bar-label {
+  overflow: hidden;
+  color: var(--mist);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bar-track {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--ink-1);
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--r-pill);
+  background: var(--flame);
+}
+
+.bar-value {
+  text-align: right;
+  font-family: var(--font-mono);
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Jedini zaslon bez obrazaca za unos, pa smije zauzeti više prostora od uske mjere ostalih
+   zaslona. --content-width i ostatak pravila main {} ostaju netaknuti za svaki drugi zaslon. */
+main:has(zaslon-nadzorna-ploca) {
+  width: 80%;
+}
+
+/* ============================================================
+   Rezultat utakmice
+   ============================================================ */
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-6);
+  margin: 0 0 var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+  background: var(--ink-2);
+}
+
+.scoreboard-team {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--paper);
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.scoreboard-score {
+  display: flex;
+  flex-shrink: 0;
+  align-items: baseline;
+  gap: var(--sp-2);
+  font-family: var(--font-mono);
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--flame);
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreboard-sep {
+  color: var(--steel);
+  font-size: 22px;
+  font-weight: 400;
+}
+
+/* ============================================================
+   Poruke
+   ============================================================ */
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin: 0 0 var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--flame-200);
+  background: color-mix(in oklab, var(--flame-900) 40%, transparent);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--r-md);
+  font-size: 14px;
+}
+
+.notice {
+  margin: 0 0 var(--sp-5);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--steel);
+}
+
+.notice a {
+  color: var(--flame-400);
+}
+
+/* ============================================================
+   Dijalog
+   ============================================================ */
+@keyframes dijalog-ulaz {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+dialog {
+  padding: 0;
+  max-height: calc(100vh - 4rem);
+  overflow: auto;
+  scrollbar-width: thin;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-xl);
+  background: var(--ink-2);
+  color: var(--bone);
+  box-shadow: var(--shadow-panel);
+}
+
+dialog[open] {
+  animation: dijalog-ulaz 260ms var(--ease-out);
+}
+
+dialog::backdrop {
+  background: color-mix(in oklab, #000 55%, transparent);
+  backdrop-filter: blur(3px);
+}
+
+dialog form {
+  width: 23rem;
+  max-width: calc(100vw - 2 * var(--gutter));
+  margin-top: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+}
+
+dialog h3 {
+  margin-bottom: var(--sp-5);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+dialog .error {
+  margin-top: 0;
+}
+
+/* ============================================================
+   Uži zasloni
+   ============================================================ */
+@media (max-width: 860px) {
+  header {
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+  }
+
+  nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    justify-content: center;
+  }
+
+  .theme-toggle {
+    margin-left: auto;
+  }
+
+  :root {
+    --gutter: 12px;
+  }
+
+  main {
+    padding: var(--sp-6) var(--sp-4) var(--sp-20);
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  form {
+    padding: var(--sp-4);
+  }
+
+  .clock {
+    gap: var(--sp-2);
+  }
+
+  .fab {
+    right: var(--sp-4);
+    bottom: var(--sp-4);
+  }
+}
+
+@media (max-width: 480px) {
+  nav a {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+
+  .scoreboard {
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+  }
+
+  .scoreboard-team {
+    flex: 1 1 100%;
+    white-space: normal;
+  }
+
+  .scoreboard-score {
+    font-size: 32px;
+  }
+}
+
+/* ============================================================
+   Smanjeno gibanje
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  button:active,
+  a.button:active,
+  .theme-toggle:active,
+  .actions-column button:active,
+  .actions-column a.button:active {
+    transform: none;
+  }
+}

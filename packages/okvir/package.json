@@ -1,0 +1,32 @@
+{
+  "name": "@ibozak23/kosarkaska-analitika",
+  "version": "1.0.5",
+  "description": "Programski okvir za izračun košarkaških statističkih pokazatelja iz događaja utakmice",
+  "author": "Ivan Božak",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibozak23/kosarkaska-analitika-zavrsni.git",
+    "directory": "packages/okvir"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map"
+  ],
+  "scripts": {
+    "clean": "node -e \"require('node:fs').rmSync('dist', { recursive: true, force: true, maxRetries: 5 })\"",
+    "build": "npm run clean && tsc -p tsconfig.json",
+    "prepack": "npm run build",
+    "test": "tsc -p tsconfig.test.json && vitest run",
+    "test:coverage": "vitest run --coverage"
+  }
+}

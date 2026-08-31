@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: kosarkaska-analitika
+    runtime: node
+    plan: free
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    startCommand: npm run seed -w apps/posluzitelj && npm start -w apps/posluzitelj
+    envVars:
+      - key: NODE_VERSION
+        value: 24.1.0

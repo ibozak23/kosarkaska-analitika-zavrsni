@@ -1,0 +1,24 @@
+{
+  "name": "posluzitelj",
+  "private": true,
+  "description": "Poslužiteljska demonstracijska aplikacija",
+  "author": "Ivan Božak",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/src/index.js",
+    "seed": "node dist/seed/index.js",
+    "test": "tsc -p tsconfig.test.json && vitest run"
+  },
+  "dependencies": {
+    "@ibozak23/kosarkaska-analitika": "^1.0.0",
+    "better-sqlite3": "^13.0.3",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/express": "^5.0.6",
+    "@types/supertest": "^7.2.1",
+    "supertest": "^7.2.2"
+  }
+}

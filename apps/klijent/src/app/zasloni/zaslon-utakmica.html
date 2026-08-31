@@ -1,0 +1,160 @@
+
+<h2>Utakmice</h2>
+
+@if (pogreska()) {
+  <p class="error">{{ pogreska() }}</p>
+}
+
+@if (utakmice().length === 0) {
+  <p class="notice">Nema registriranih utakmica.</p>
+} @else {
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Odigrana</th>
+          <th>Domaći</th>
+          <th>Gosti</th>
+          <th>Rezultat</th>
+          <th>Stanje</th>
+          <th class="actions-column">Radnja</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (utakmica of utakmice(); track utakmica.id) {
+          <tr>
+            <td>{{ oblikujDatumIVrijeme(utakmica.playedAt) }}</td>
+            <td>{{ imeTima(utakmica.homeTeamId) }}</td>
+            <td>{{ imeTima(utakmica.awayTeamId) }}</td>
+            <td class="number-column">{{ rezultatUtakmice(utakmica) }}</td>
+            <td>{{ oznakaStanjaUtakmice(utakmica) }}</td>
+            <td class="actions-column">
+
+              <a class="button" [routerLink]="['/utakmice', utakmica.id, 'dogadjaji']">
+                <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M9 4h6v3H9z" />
+                  <path d="M7 7h10v13H7z" />
+                  <path d="M9.5 12h5M9.5 15h5M9.5 18h3" />
+                </svg>
+                Događaji
+              </a>
+              <a class="button" [routerLink]="['/utakmice', utakmica.id, 'analitika']">
+                <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 20V11M12 20V4M19 20v-6" />
+                </svg>
+                Analitika
+              </a>
+              @if (jeUTijeku(utakmica)) {
+                <button type="button" class="secondary" (click)="zavrsi(utakmica)">
+                  <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M6 21V4" />
+                    <path d="M6 4h12l-2.5 3.5L18 11H6" />
+                  </svg>
+                  Završi
+                </button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (timovi().length < 2) {
+  <p class="notice">Utakmica se ne može registrirati dok ne postoje barem dva tima.</p>
+} @else {
+  <button
+    type="button"
+    class="fab"
+    title="Nova utakmica"
+    aria-label="Nova utakmica"
+    (click)="otvoriUnos()"
+  >
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  </button>
+}
+
+<dialog #dijalog (close)="naZatvaranjeDijaloga()">
+  <form (ngSubmit)="prijavi()">
+    <h3>Nova utakmica</h3>
+
+    @if (pogreskaObrasca()) {
+      <p class="error">{{ pogreskaObrasca() }}</p>
+    }
+
+    <label>
+      Datum i vrijeme
+      <input type="datetime-local" name="playedAt" [(ngModel)]="obrazac.playedAt" />
+    </label>
+
+    <label>
+      Domaći tim
+      <select name="homeTeamId" [(ngModel)]="obrazac.homeTeamId" (ngModelChange)="naPromjenuTima()">
+        <option [ngValue]="null">— odaberite —</option>
+        @for (tim of timovi(); track tim.id) {
+          <option [ngValue]="tim.id">{{ tim.name }}</option>
+        }
+      </select>
+    </label>
+
+    @if (obrazac.homeTeamId !== null) {
+      <fieldset>
+        <legend>Početna petorka domaćih ({{ domacaPetorka().length }} od 5)</legend>
+        @for (igrac of domaciIgraci(); track igrac.id) {
+          <label class="check">
+            <input
+              type="checkbox"
+              [checked]="domacaPetorka().includes(igrac.id)"
+              (change)="oznaciDomaceg(igrac.id)"
+            />
+            {{ igrac.firstName }} {{ igrac.lastName }} ({{ igrac.position }})
+          </label>
+        }
+      </fieldset>
+    }
+
+    <label>
+      Gostujući tim
+      <select name="awayTeamId" [(ngModel)]="obrazac.awayTeamId" (ngModelChange)="naPromjenuTima()">
+        <option [ngValue]="null">— odaberite —</option>
+        @for (tim of timovi(); track tim.id) {
+          <option [ngValue]="tim.id">{{ tim.name }}</option>
+        }
+      </select>
+    </label>
+
+    @if (obrazac.awayTeamId !== null) {
+      <fieldset>
+        <legend>Početna petorka gostiju ({{ gostujucaPetorka().length }} od 5)</legend>
+        @for (igrac of gostujuciIgraci(); track igrac.id) {
+          <label class="check">
+            <input
+              type="checkbox"
+              [checked]="gostujucaPetorka().includes(igrac.id)"
+              (change)="oznaciGostujuceg(igrac.id)"
+            />
+            {{ igrac.firstName }} {{ igrac.lastName }} ({{ igrac.position }})
+          </label>
+        }
+      </fieldset>
+    }
+
+    <div class="actions">
+      <button type="submit">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12.5l4.5 4.5L19 7" />
+        </svg>
+        Registriraj
+      </button>
+      <button type="button" class="secondary" (click)="zatvoriDijalog()">
+        <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+        Odustani
+      </button>
+    </div>
+  </form>
+</dialog>

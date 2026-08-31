@@ -1,0 +1,178 @@
+
+@let trenutniSazetak = sazetak();
+
+<a class="back-link" routerLink="/utakmice">
+  <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M19 12H5M11 6l-6 6 6 6" />
+  </svg>
+  Natrag na utakmice
+</a>
+
+<h2>Analitika utakmice</h2>
+
+@if (trenutniSazetak !== null) {
+  @let zbrojDomacih = izracunajZbrojZapisnika(trenutniSazetak.home);
+  @let zbrojGostiju = izracunajZbrojZapisnika(trenutniSazetak.away);
+
+  <div class="scoreboard">
+    <span class="scoreboard-team">{{ trenutniSazetak.home.team.name }}</span>
+    <span class="scoreboard-score">
+      <span>{{ zbrojDomacih.points }}</span>
+      <span class="scoreboard-sep">:</span>
+      <span>{{ zbrojGostiju.points }}</span>
+    </span>
+    <span class="scoreboard-team">{{ trenutniSazetak.away.team.name }}</span>
+  </div>
+}
+
+@if (pogreska()) {
+  <p class="error">{{ pogreska() }}</p>
+}
+
+@if (trenutniSazetak === null) {
+  <p class="notice">Analitika nije dohvaćena.</p>
+} @else {
+
+  @for (strana of [trenutniSazetak.home, trenutniSazetak.away]; track strana.team.id) {
+    @let zbrojevi = izracunajZbrojZapisnika(strana);
+    @let pokazatelji = pokazateljiTima(strana.team.id);
+
+    <h3>{{ strana.team.name }}</h3>
+
+    <div class="scroll scroll-v" [style.--redaka-tablice]="vidljivihRedaka">
+      <table>
+        <thead>
+          <tr>
+            <th>Igrač</th>
+            <th>Min</th>
+            <th>Poeni</th>
+            <th>Šut iz igre</th>
+            <th>Za 3</th>
+            <th>Slobodna</th>
+            <th>Sk of.</th>
+            <th>Sk def.</th>
+            <th>As</th>
+            <th>Izg</th>
+            <th>Ukr</th>
+            <th>Bl</th>
+            <th>F</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (redak of strana.players; track redak.player.id) {
+            @let zapisnik = redak.stats.boxScore;
+            <tr [class.selected]="oznakaOdabranogIgraca() === redak.player.id">
+
+              <td>
+                <button
+                  type="button"
+                  class="pick"
+                  [attr.aria-pressed]="oznakaOdabranogIgraca() === redak.player.id"
+                  (click)="odaberiIgraca(redak.player.id)"
+                >{{ redak.player.firstName }} {{ redak.player.lastName }}</button>
+              </td>
+
+              @if (zapisnik === null) {
+                <td colspan="12">Igrač nije ušao u igru.</td>
+              } @else {
+                <td>{{ oblikujOdigranoVrijeme(zapisnik.playedSeconds) }}</td>
+                <td>{{ zapisnik.points }}</td>
+                <td>
+                  {{
+                    oblikujPogodjeneOdPokusanih(
+                      zapisnik.fieldGoalsMade,
+                      zapisnik.fieldGoalsAttempted,
+                      zapisnik.fieldGoalPercentage
+                    )
+                  }}
+                </td>
+                <td>
+                  {{
+                    oblikujPogodjeneOdPokusanih(
+                      zapisnik.threePointersMade,
+                      zapisnik.threePointersAttempted,
+                      zapisnik.threePointPercentage
+                    )
+                  }}
+                </td>
+                <td>
+                  {{
+                    oblikujPogodjeneOdPokusanih(
+                      zapisnik.freeThrowsMade,
+                      zapisnik.freeThrowsAttempted,
+                      zapisnik.freeThrowPercentage
+                    )
+                  }}
+                </td>
+                <td>{{ zapisnik.offensiveRebounds }}</td>
+                <td>{{ zapisnik.defensiveRebounds }}</td>
+                <td>{{ zapisnik.assists }}</td>
+                <td>{{ zapisnik.turnovers }}</td>
+                <td>{{ zapisnik.steals }}</td>
+                <td>{{ zapisnik.blocks }}</td>
+                <td>{{ zapisnik.personalFouls }}</td>
+              }
+            </tr>
+          }
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Ukupno</th>
+            <th></th>
+            <th>{{ zbrojevi.points }}</th>
+            <th>{{ zbrojevi.fieldGoalsMade }}/{{ zbrojevi.fieldGoalsAttempted }}</th>
+            <th>{{ zbrojevi.threePointersMade }}/{{ zbrojevi.threePointersAttempted }}</th>
+            <th>{{ zbrojevi.freeThrowsMade }}/{{ zbrojevi.freeThrowsAttempted }}</th>
+            <th>{{ zbrojevi.offensiveRebounds }}</th>
+            <th>{{ zbrojevi.defensiveRebounds }}</th>
+            <th>{{ zbrojevi.assists }}</th>
+            <th>{{ zbrojevi.turnovers }}</th>
+            <th>{{ zbrojevi.steals }}</th>
+            <th>{{ zbrojevi.blocks }}</th>
+            <th>{{ zbrojevi.personalFouls }}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    @let odabrani = pokazateljiIgraca();
+
+    @if (sadrziOdabranog(strana) && odabrani !== null) {
+      <h3>Napredni pokazatelji — {{ imeIgraca(oznakaOdabranogIgraca()) }}</h3>
+
+      <dl class="indicators">
+        <div>
+          <dt>Odigrano</dt>
+          <dd>{{ odabrani.boxScore === null ? "—" : oblikujOdigranoVrijeme(odabrani.boxScore.playedSeconds) }}</dd>
+        </div>
+        <div>
+          <dt>Postotak istinske preciznosti šuta</dt>
+          <dd>{{ oblikujPostotak(odabrani.trueShootingPercentage) }}</dd>
+        </div>
+        <div>
+          <dt>Pozitivno/negativno</dt>
+          <dd>{{ odabrani.plusMinus ?? "—" }}</dd>
+        </div>
+        <div>
+          <dt>Neprilagođeni indeks učinkovitosti</dt>
+          <dd>{{ oblikujDecimalniBroj(odabrani.playerEfficiencyRating, 3) }}</dd>
+        </div>
+      </dl>
+    }
+
+    <dl class="indicators">
+      <div>
+        <dt>Tempo utakmice</dt>
+        <dd>{{ oblikujDecimalniBroj(pokazatelji?.pace ?? null, 3) }}</dd>
+      </div>
+      <div>
+        <dt>Ofenzivni pokazatelj</dt>
+        <dd>{{ oblikujDecimalniBroj(pokazatelji?.offensiveRating ?? null, 3) }}</dd>
+      </div>
+      <div>
+        <dt>Defenzivni pokazatelj</dt>
+        <dd>{{ oblikujDecimalniBroj(pokazatelji?.defensiveRating ?? null, 3) }}</dd>
+      </div>
+    </dl>
+  }
+}
