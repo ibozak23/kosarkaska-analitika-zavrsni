@@ -5,7 +5,7 @@ Informacijski i poslovni sustavi). Repozitorij sadrži programski okvir objavlje
 demonstracijsku aplikaciju koja dokazuje da je okvir upotrebljiv izvan vlastitih testova.
 
 Javna adresa demonstracijske aplikacije: **<https://kosarkaska-analitika.onrender.com>**
-Objavljeni paket: **[`@ibozak23/kosarkaska-analitika`](https://www.npmjs.com/package/@ibozak23/kosarkaska-analitika)**
+Objavljeni paket: **[`@ibozak23/kosarkaska-analitika`](https://www.npmjs.com/package/@ibozak23/kosarkaska-analitika?activeTab)**
 
 ## Što okvir radi
 
@@ -32,8 +32,8 @@ Preduvjeti: **Node.js 24** (`package.json` traži ≥ 20.11.0, ali `render.yaml`
 na 24) i **npm 10**.
 
 ```
-git clone https://github.com/ibozak23/ZavrsniRad.git
-cd ZavrsniRad
+git clone https://github.com/ibozak23/kosarkaska-analitika-zavrsni.git
+cd kosarkaska-analitika-zavrsni
 npm install
 npm run build
 npm test
@@ -84,14 +84,6 @@ Stanje testova nakon zadnje provjere: **okvir 66, poslužitelj 78, klijent 10** 
 | `PORT` | `3000` | Vrata na kojima poslužitelj sluša |
 | `DATABASE_PATH` | `podaci/analitika.db` | Putanja do datoteke SQLite; vrijednost `:memory:` daje bazu u radnoj memoriji |
 
-## Dokumentacija
-
-| Dokument | Sadržaj |
-|---|---|
-| [`docs/arhitektura.md`](docs/arhitektura.md) | Slojevi, tok podataka od unosa događaja do pokazatelja, model vremena, granice ovisnosti |
-| [`docs/okvir-api.md`](docs/okvir-api.md) | Referenca javnog sučelja okvira: svaki izvezeni tip i razred, pravila za `null`, pisanje vlastitog kalkulatora |
-| [`docs/rest-api.md`](docs/rest-api.md) | Svih 20 ruta sučelja REST s tijelima zahtjeva, odgovorima i pogreškama |
-| [`docs/razvoj.md`](docs/razvoj.md) | Vodič za razvoj: struktura, postavke prevoditelja, testovi, uobičajene izmjene, postavljanje |
 
 ## Licencija
 
