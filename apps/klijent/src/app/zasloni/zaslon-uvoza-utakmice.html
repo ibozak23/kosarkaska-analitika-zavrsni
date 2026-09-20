@@ -1,0 +1,157 @@
+<h2>Uvoz utakmice</h2>
+
+<p class="notice">
+  Jedna CSV datoteka nosi cijelu utakmicu: oba tima, sastave, obje početne petorke i sve događaje.
+  Datoteka se najprije pročita i provjeri, a upisuje se tek jednim zahtjevom — ako poslužitelj odbije
+  bilo koji događaj, u bazi ne ostaje ništa.
+</p>
+
+<label>
+  CSV datoteka utakmice
+  <input #poljeDatoteke type="file" accept=".csv,text/csv" (change)="naOdabirDatoteke()" />
+</label>
+
+@if (pogreska()) {
+  <p class="error">{{ pogreska() }}</p>
+}
+
+@if (pogreskeDatoteke().length > 0) {
+  <p class="error">
+    Datoteka {{ nazivDatoteke() }} ima {{ pogreskeDatoteke().length }} pogrešku ili više — nijedan
+    zahtjev nije poslan.
+  </p>
+
+  <div class="scroll scroll-v" [style.--redaka-tablice]="vidljivihRedaka">
+    <table>
+      <thead>
+        <tr>
+          <th class="number-column">Redak</th>
+          <th>Pogreška</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (greska of pogreskeDatoteke(); track $index) {
+          <tr>
+            <td class="number-column">{{ greska.redak === 0 ? "—" : greska.redak }}</td>
+            <td>{{ greska.poruka }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}
+
+@if (ishod(); as zavrseni) {
+  <p class="notice">
+    Uvezena je utakmica {{ zavrseni.game.id }}: {{ zavrseni.eventCount }} događaja,
+    {{ zavrseni.createdTeams }} novih timova i {{ zavrseni.createdPlayers }} novih igrača.
+  </p>
+
+  <div class="actions">
+    <a class="button" [routerLink]="['/utakmice', zavrseni.game.id, 'analitika']">
+      <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M5 20V11M12 20V4M19 20v-6" />
+      </svg>
+      Analitika utakmice
+    </a>
+    <button type="button" class="secondary" (click)="zapocniIznova()">
+      <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 12a8 8 0 1 1 2.3 5.7" />
+        <path d="M4 20v-5h5" />
+      </svg>
+      Uvezi još jednu
+    </button>
+  </div>
+}
+
+@if (utakmica(); as procitana) {
+  <h3>Pregled datoteke {{ nazivDatoteke() }}</h3>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Strana</th>
+          <th>Tim</th>
+          <th class="number-column">Igrača</th>
+          <th>Početna petorka</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (strana of sazetakStrana(); track strana.oznaka) {
+          <tr>
+            <td>{{ strana.oznaka }}</td>
+            <td>{{ strana.naziv }}</td>
+            <td class="number-column">{{ strana.brojIgraca }}</td>
+            <td>{{ strana.petorka }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          @for (vrsta of brojeviPoVrsti(); track vrsta.oznaka) {
+            <th class="number-column">{{ vrsta.oznaka }}</th>
+          }
+          <th class="number-column">Ukupno</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          @for (vrsta of brojeviPoVrsti(); track vrsta.oznaka) {
+            <td class="number-column">{{ vrsta.broj }}</td>
+          }
+          <td class="number-column">{{ procitana.dogadjaji.length }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll scroll-v" [style.--redaka-tablice]="vidljivihRedaka">
+    <table>
+      <thead>
+        <tr>
+          <th class="number-column">Redak</th>
+          <th>Vrijeme</th>
+          <th>Strana</th>
+          <th class="number-column">Dres</th>
+          <th>Događaj</th>
+          <th>Pojedinost</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (dogadjaj of procitana.dogadjaji; track dogadjaj.redak) {
+          <tr>
+            <td class="number-column">{{ dogadjaj.redak }}</td>
+            <td>{{ oblikujVrijemeSemafora(dogadjaj.cetvrtina, dogadjaj.minuta, dogadjaj.sekunda) }}</td>
+            <td>{{ oznakaStraneDogadjaja(dogadjaj) }}</td>
+            <td class="number-column">{{ dogadjaj.dres }}</td>
+            <td>{{ oznakaVrste(dogadjaj.tip) }}</td>
+            <td>{{ pojedinost(dogadjaj) }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="actions">
+    <button type="button" [disabled]="uvozUTijeku()" (click)="uvezi()">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v12" />
+        <path d="M8 11l4 4 4-4" />
+        <path d="M4 19h16" />
+      </svg>
+      {{ uvozUTijeku() ? "Uvozim…" : "Uvezi utakmicu" }}
+    </button>
+    <button type="button" class="secondary" [disabled]="uvozUTijeku()" (click)="zapocniIznova()">
+      <svg class="icon icon-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18" />
+      </svg>
+      Odustani
+    </button>
+  </div>
+}

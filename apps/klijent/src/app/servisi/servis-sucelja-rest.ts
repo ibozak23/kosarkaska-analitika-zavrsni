@@ -13,7 +13,9 @@ import type {
   ZahtjevZaIgraca,
   OdgovorPokazateljaIgraca,
   ZahtjevZaTim,
-  OdgovorPokazateljaTima
+  OdgovorPokazateljaTima,
+  ZahtjevZaUvozUtakmice,
+  OdgovorUvozaUtakmice
 } from "./tipovi-sucelja-rest.js";
 
 const PREDMETAK_API = "/api";
@@ -103,6 +105,12 @@ export class ServisSuceljaRest {
 
   spremiDogadjaj(gameId: number, input: ZahtjevZaDogadjaj): Promise<GameEvent> {
     return this.#posaljiZahtjev(this.#http.post<GameEvent>(`${PREDMETAK_API}/games/${String(gameId)}/events`, input));
+  }
+
+  uveziUtakmicu(input: ZahtjevZaUvozUtakmice): Promise<OdgovorUvozaUtakmice> {
+    return this.#posaljiZahtjev(
+      this.#http.post<OdgovorUvozaUtakmice>(`${PREDMETAK_API}/games/import`, input)
+    );
   }
 
   dohvatiSazetakUtakmice(gameId: number): Promise<OdgovorSazetkaUtakmice> {

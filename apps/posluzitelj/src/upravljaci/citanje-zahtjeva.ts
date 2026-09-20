@@ -66,6 +66,18 @@ export function dohvatiNizCijelihBrojeva(izvor: Record<string, unknown>, kljuc: 
   return vrijednost as number[];
 }
 
+export function dohvatiNizZapisa(izvor: Record<string, unknown>, kljuc: string): Record<string, unknown>[] {
+  const vrijednost: unknown = izvor[kljuc];
+
+  if (!Array.isArray(vrijednost)) {
+    throw new PogreskaProvjere(`Polje ${kljuc} mora biti popis zapisa.`);
+  }
+
+  const stavke: unknown[] = vrijednost;
+
+  return stavke.map((stavka) => dohvatiZapis(stavka));
+}
+
 export function dohvatiOznaku(vrijednost: string | undefined, imeOznake: string): number {
   const broj = Number(vrijednost);
 

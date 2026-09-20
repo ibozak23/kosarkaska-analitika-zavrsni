@@ -57,3 +57,39 @@ export interface ZahtjevZaPrijavuUtakmice {
 type BezOznaka<TDogadjaj> = TDogadjaj extends GameEvent ? Omit<TDogadjaj, "id" | "gameId"> : never;
 
 export type ZahtjevZaDogadjaj = BezOznaka<GameEvent>;
+
+export type StranaUvoza = "HOME" | "AWAY";
+
+export interface ZahtjevZaIgracaUvoza {
+  readonly jerseyNumber: number;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly position: Position;
+  readonly heightCm: number | null;
+}
+
+export interface ZahtjevZaStranuUvoza {
+  readonly team: ZahtjevZaTim;
+  readonly players: readonly ZahtjevZaIgracaUvoza[];
+  readonly starters: readonly number[];
+}
+
+type PoDresu<TDogadjaj> = TDogadjaj extends ZahtjevZaDogadjaj
+  ? Omit<TDogadjaj, "playerId" | "teamId"> & { readonly side: StranaUvoza; readonly jerseyNumber: number }
+  : never;
+
+export type ZahtjevZaDogadjajUvoza = PoDresu<ZahtjevZaDogadjaj>;
+
+export interface ZahtjevZaUvozUtakmice {
+  readonly playedAt: string;
+  readonly home: ZahtjevZaStranuUvoza;
+  readonly away: ZahtjevZaStranuUvoza;
+  readonly events: readonly ZahtjevZaDogadjajUvoza[];
+}
+
+export interface OdgovorUvozaUtakmice {
+  readonly game: OdgovorUtakmice;
+  readonly eventCount: number;
+  readonly createdTeams: number;
+  readonly createdPlayers: number;
+}

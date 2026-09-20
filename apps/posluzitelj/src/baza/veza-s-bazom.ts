@@ -24,3 +24,9 @@ export function otvoriBazu(putanja: string): Database.Database {
 
   return baza;
 }
+
+export type PokretacTransakcije = <TIshod>(posao: () => TIshod) => TIshod;
+
+export function pripremiPokretacTransakcije(baza: Database.Database): PokretacTransakcije {
+  return <TIshod>(posao: () => TIshod): TIshod => baza.transaction(posao)();
+}

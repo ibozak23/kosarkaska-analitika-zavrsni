@@ -5,18 +5,20 @@ import { ZaslonAnalitikeUtakmice } from "../src/app/zasloni/zaslon-analitike-uta
 import { ZaslonDogadjajaUtakmice } from "../src/app/zasloni/zaslon-dogadjaja-utakmice.js";
 import { ZaslonNadzornePloce } from "../src/app/zasloni/zaslon-nadzorne-ploce.js";
 import { ZaslonUtakmica } from "../src/app/zasloni/zaslon-utakmica.js";
+import { ZaslonUvozaUtakmice } from "../src/app/zasloni/zaslon-uvoza-utakmice.js";
 import { ZaslonIgraca } from "../src/app/zasloni/zaslon-igraca.js";
 import { ZaslonTimova } from "../src/app/zasloni/zaslon-timova.js";
 
 describe("usmjeravanje", () => {
-  it("vodi na šest zaslona", () => {
+  it("vodi na sedam zaslona", () => {
     const zasloni = [
       { path: "", component: ZaslonNadzornePloce },
       { path: "timovi", component: ZaslonTimova },
       { path: "igraci", component: ZaslonIgraca },
       { path: "utakmice", component: ZaslonUtakmica },
       { path: "utakmice/:id/dogadjaji", component: ZaslonDogadjajaUtakmice },
-      { path: "utakmice/:id/analitika", component: ZaslonAnalitikeUtakmice }
+      { path: "utakmice/:id/analitika", component: ZaslonAnalitikeUtakmice },
+      { path: "uvoz", component: ZaslonUvozaUtakmice }
     ];
 
     for (const zaslon of zasloni) {
